@@ -1,0 +1,13 @@
+name = "Jellyfish"
+uuid = "aa7d2582-1654-43a3-b0fa-2d07591e56ac"
+authors = ["Vindrue"]
+version = "0.1.0"
+
+[deps]
+PhysicalConstants = "5ad8b20f-a522-5ce9-bfc9-ddf1d5bda6ab"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
+Richardson = "708f8203-808e-40c0-ba2d-98a6953ed40d"
+SymPy = "24249f21-da20-56a4-8eb1-6a02cf4ae2e6"
+TaylorSeries = "6aa5eb33-94cf-58f4-a9d0-e4b2c4fc25ea"
+Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
