@@ -1,0 +1,222 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <title>JellyFish Documentation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body>
+<h1>Contents</h1>
+
+<p>
+<a href="#intro">Introduction</a><br>
+<a href="#quickstart">Quick Start</a><br>
+<a href="#calculus">Calculus</a><br>
+- <a href="#diff">diff</a><br>
+- <a href="#int">int</a><br>
+- <a href="#tpoly">tpoly</a><br>
+<a href="#discretemath">Discrete Math</a><br>
+- <a href="#nsolve">nsolve</a><br>
+- <a href="#nlim">nlim</a><br>
+<a href="#visualization">Visualization</a><br>
+- <a href="#plot">plot</a><br>
+<a href="#"></a>
+<a href="#"></a>
+<a href="#"></a>
+<a href="#"></a>
+
+
+
+</p>
+
+<h1 id="intro">Introduction</h1>
+<p>JellyFish is aiming to be a all-in-one symbolic and numeric computing environment, specifically geared towards mathematics and physics.
+ The aim is to bridge the gap between the speed and ease of use of CAS tools, and the versatility and performance of conventional programming languages.
+ JellyFish currently exists as a Julia package, but many of the functions support Python interoperability, so you are able to use this package with JuliaPy.
+ A proper compiled Python package is on the way.</p>
+
+<h1 id="quickstart">Quick Start</h1>
+<p>
+Use the <code>@sym</code> macro to define a variable as a symbol/<code>Sym</code>. 
+</p>
+<pre><code>using JellyFish
+@sym x,y</pre></code>
+
+<p>
+If you need physical constants to work with you can import them from <code>consts()</code>.
+</p>
+
+<pre><code>c = consts("c")</pre></code>
+
+<p>You can now start mathing the math.</p>
+
+<h1 id="calculus">Calculus</h1>
+<h2 id="diff">diff</h2>
+<code>diff(func; var, order)</code>
+<p>Computes the <code>order</code>'th order partial derivative of a function <code>func</code> \(: \mathbb R^n \rightarrow \mathbb R^n\) with respect to <code>var</code> using forward differentiation or symbolic differentiation depending on the input function.</p>
+\[
+\frac{\partial^{\textup{order}}\ \textup{func}}{\partial^{\textup{order}}\ \textup{sym}}
+\]	
+<h4>arguments</h4>
+<code>func</code> - any differentiable callable<br>
+<code>var</code> - any <code>Sym</code> - optional for functions in \(\mathbb R\)<br>
+<code>order</code> - any <code>Number</code>
+
+<h4>example usage</h4>
+<pre><code>f(x) = sin(x)
+diff(f)</code></pre>
+returns the 1st derivative of <code>f</code> as a lambda function
+
+<pre><code>@sym x
+diff(f(x))</code></pre>
+returns the 1st derivative of <code>f</code> as a symbolic expression
+
+<pre><code>@sym y
+g(x,y) = x + y
+diff(g(x,y), sym=y)</pre></code>
+returns the 1st derivative of <code>g</code> with respect to <code>y</code> as a symbolic expression
+
+<pre><code>diff(g(x,y), sym=x, order=3)</code></pre>
+returns the 3rd derivative of <code>g</code> with respect to <code>x</code> as a symbolic expression
+
+<h4>notes</h4>
+<code>diff()</code> will use forward differentiation for native Julia functions passed by themselves, if a native function is passed as a function of a <code>Sym</code>, e.g <code>f(x)</code>, or if a symbolic expression is passed, it will use symbolic differentiation.
+<br><br>
+
+<h2 id="int">int</h2>
+<code>int(func; var, lims, order)</code>
+<p>Computes the <code>order</code>'th order integral from <code>lims[1]</code> to <code>lims[2]</code> of a function <code>func</code> \(: \mathbb R^n \rightarrow \mathbb R^n\) with respect to <code>var</code> using symbolic differentiation.</p>
+\[
+\int_{\textup{lims[1]}}^{\textup{lims[2]}} \textup{func}\ \ \textup{d var}
+\]
+<h4>arguments</h4>
+<code>func</code> - any function where the set of discontinuities have measure 0<br>
+<code>var</code> - any <code>Sym</code> - optional for single-symbol functions<br>
+<code>lims</code> - any <code>Tuple{Number, Number}</code> - optional (if not specified the indefinite integral will be computed)<br>
+<code>order</code> - any <code>Number</code> - optional (default=1)
+
+<h4>example usage</h4>
+<pre><code>@sym x
+f(x) = x
+int(f(x))</code></pre>
+returns the 1st order indefinite integral of <code>f</code> with respect to <code>x</code> as a symbolic expression
+
+<pre><code>int(f(x), lims=(0,oo))</code></pre>
+returns the 1st order definite integral of <code>f</code> from <code>0</code> to <code>oo</code>(∞) as a symbolic expression
+
+<pre><code>@sym y
+g(x,y) = x + y
+int(g(x,y), var=y, lims=(-2, π), order=2)</pre></code>
+returns the 1st order definite integral of <code>g</code> from <code>-2</code> to <code>π</code> with respect to <code>y</code> as a symbolic expression
+
+<h4>notes</h4>
+<p>"People" who call indefinite integrals "antiderivatives" should be exiled.</p>
+<br><br>
+
+
+
+<h2 id="tpoly">tpoly</h2>
+<code>tpoly(func; var, order, point)</code><br>
+Computes the <code>order</code>th order Taylor polynomial of <code>func</code> around <code>point</code> with respect to <code>var</code>.
+\[
+\sum_{n=0}^{\textup{order}} \frac{\textup{func}^{(n)}(\textup{point})}{n!} (\textup{var} - \textup{point})^n
+\]
+<h4>arguments</h4>
+<code>func</code> - any callable<br>
+<code>var</code> - any <code>Sym</code> - optional, required if <code>func</code> is symbolic<br>
+<code>order</code> - any <code>Int</code> - optional (default = 1)<br>
+<code>point</code> - any <code>Number</code> - optional (default = 0)<br>
+
+<h4>example usage</h4>
+<pre><code>f(x) = sin(x)
+tpoly(f)</code></pre>
+returns the 1st order Taylor polynomial of <code>f</code> around 0.
+<pre><code>@sym m,c
+E = m * c^2
+tpoly(E; var=m, order=2, point=1)</code></pre>
+returns the 2nd order Taylor polynomial of <code>m*c^2</code> with respect to <code>m</code> around <code>m</code> = 0
+
+<h4>notes</h4>
+This one was very helpful in my Linear Algebra and Analysis exam.
+
+
+<h1 id="discretemath">Discrete Math</h1>
+<h2 id="nsolve">nsolve</h2>
+<p>Numerically finds a root of <code>func</code> \(: \mathbb R \rightarrow \mathbb R\) using the Newton-Raphson method with <code>estimate</code> as a starting guess and <code>iterations</code> iterations.</p>
+\[
+\textup{func}(x) = 0 \qquad x=?
+\]
+<h4>arguments</h4>
+<code>func</code> - any callable taking 1 <code>Number</code> and returning 1 <code>Number</code><br>
+<code>estimate</code> - any <code>Number</code> - optional (default = 0)<br>
+<code>iterations</code> - any <code>Int</code> - optional (default = 10)<br>
+
+<h4>notes</h4>
+I initially wrote it from memory, having heard of Newton's method 2 years ago, the result was a solver that only worked for strictly growing functions. It's still included in the package as <code>JellyFish.reallybadsolver()</code>.
+
+<br>
+<br>
+
+<h2 id="nlim">nlim</h2>
+<code>nlim(func, dest, dir)</code>
+<p>Computes the limit of a function <code>func</code> \(: \mathbb R \rightarrow \mathbb R^n\) approaching <code>dest</code> from <code>dir</code> numerically using Richardson Extrapolation.</p>
+\[
+\lim_{x \rightarrow \textup{dest}^{\textup{dir}}} \textup{func}(x)
+\]
+
+<h4>arguments</h4>
+<code>func</code> - any callable with 1 <code>Number</code> argument returning n <code>Number</code>s<br>
+<code>dest</code> - any <code>Number</code><br>
+<code>dir </code> - the <code>+</code> or <code>-</code> function - optional (default <code>+</code>)<br>
+
+<h4>example usage</h4>
+	<code>nlim(f, 1)</code><br>
+	returns the limit of <code>f</code> approaching 1 from above<br>
+	<br>
+	<code>nlim(g, π, -)</code><br>
+	returns the limit of <code>g</code> approaching pi from below<br>
+</body>
+</html>
+
+<h4>notes</h4>
+This function is a wrapper of <code>Richardson.extrapolate</code> from <a href="https://juliapackages.com/p/richardson">Richardson.jl</a>
+
+
+
+<h1 id="visualization">Visualization</h1>
+<h2 id="plot">plot</h2>
+<code>plot(data; constrain, xlims, ylims, values, yerr, save, labels, xlabel, ylabel, xticks)</code>
+
+Plots 2D data and/or functions. Documentation here is unfinished and poorly structured, will be fixed when the function is rewritten (currently too monotonic and poorly structured).
+
+<h4>arguments</h4>
+<code>data</code> - Array of any callables and/or 2-length tuple/arrays of datapoints eg. <code>[f, [x,y], (x,p), expr]</code><br>
+
+<code>constrain</code> - Constrain x and y axis to be equally proportional - <code>bool</code> - optional (default = <code>false</code>)<br>
+
+<code>xlims</code> - 2-tuple of <code>Number</code>s - optional (default = <code>(-4,4)</code><br>
+
+<code>ylims</code> - 2-tuple of <code>Number</code>s - optional (default = none)<br>
+
+<code>values</code> - fineness of function display (higher values may be necessary for fast-growing functions) - any <code>int</code> - optional (default = 10000)<br>
+
+<code>yerr</code> - error bars - <code>Array</code> of <code>Number</code>s - optional (default = none)<br>
+
+<code>save</code> - name of output file, no output if empty - <code>String</code> (dc this) - optional (default = none)<br>
+
+<code>labels</code> - data labels - <code>Array</code> of <code>String</code>s - optional (default = none)<br>
+
+<code>xlabel</code> - x-axis label - any <code>String</code> - optional (default = none)<br>
+
+<code>ylabel</code> - y-axis label - any <code>String</code> - optional (default = none)<br>
+
+<code>xticks</code> - x-ticks and corresponding labels - 2-tuple of <code>Array</code> of <code>Number</code>s and <code>Array</code> of <code>String</code>s - optional (default = none)
+
+<h4>example usage</h4>
+coming soon
+
+<h4>notes</h4>
+Discontinuous functions are plotted correctly, NaN and complex handling is built-in.<br><br> Python functions and data were an absolute pain in the ass to handle correctly when this was written.<br><br>This is the first function i wrote in this package.

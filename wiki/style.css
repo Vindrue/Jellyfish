@@ -1,0 +1,28 @@
+
+code {
+  font-size: 1em;
+  background-color: #f4f4f4;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+pre {
+        background-color: #f4f4f4;
+        padding: 1rem;
+        border-radius: 4px;
+        overflow-x: auto;
+        margin: 1rem 0;
+        /* These ensure the background fills the container */
+        width: 100%;
+	box-sizing: border-box;
+}
+
+pre code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 1em;
+        line-height: 1.5;
+        /* Make code block fill the pre element */
+        display: block;
+        width: 100%;
+}
