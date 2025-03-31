@@ -15,7 +15,7 @@
 <a href="#intro">Introduction</a><br>
 <a href="#quickstart">Quick Start</a><br>
 <a href="#calculus">Calculus</a><br>
-- <a href="#diff">diff</a><br>
+- <a href="#dif">diff</a><br>
 - <a href="#int">int</a><br>
 - <a href="#tpoly">tpoly</a><br>
 <a href="#discretemath">Discrete Math</a><br>
@@ -54,9 +54,9 @@ If you need physical constants to work with you can import them from <code>const
 <p>You can now start mathing the math.</p>
 
 <h1 id="calculus">Calculus</h1>
-<h2 id="diff">diff</h2>
-<code>diff(func; var, order)</code>
-<p>Computes the <code>order</code>'th order partial derivative of a function <code>func</code> \(: \mathbb R^n \rightarrow \mathbb R^n\) with respect to <code>var</code> using forward differentiation or symbolic differentiation depending on the input function.</p>
+<h2 id="dif">dif</h2>
+<code>dif(func; var, order)</code>
+<p>Computes the <code>order</code>'th order partial derivative of a callable <code>func</code> \(: \mathbb R^n \rightarrow \mathbb R^n\) with respect to <code>var</code> using symbolic differentiation.</p>
 \[
 \frac{\partial^{\textup{order}}\ \textup{func}}{\partial^{\textup{order}}\ \textup{sym}}
 \]	
@@ -66,29 +66,33 @@ If you need physical constants to work with you can import them from <code>const
 <code>order</code> - any <code>Number</code>
 
 <h4>example usage</h4>
-<pre><code>f(x) = sin(x)
-diff(f)</code></pre>
-returns the 1st derivative of <code>f</code> as a lambda function
 
-<pre><code>@sym x
-diff(f(x))</code></pre>
+<pre><code>f(x) = sin(x)
+@sym x
+dif(f(x))</code></pre>
 returns the 1st derivative of <code>f</code> as a symbolic expression
+
+<pre><code>dif(2*x)
+</code></pre>
+returns the 1st derivative of <code>2*x</code> as a symbolic expression
 
 <pre><code>@sym y
 g(x,y) = x + y
-diff(g(x,y), sym=y)</pre></code>
+dif(g(x,y), sym=y)</pre></code>
 returns the 1st derivative of <code>g</code> with respect to <code>y</code> as a symbolic expression
 
-<pre><code>diff(g(x,y), sym=x, order=3)</code></pre>
+<pre><code>dif(g(x,y), sym=x, order=3)</code></pre>
 returns the 3rd derivative of <code>g</code> with respect to <code>x</code> as a symbolic expression
 
 <h4>notes</h4>
-<code>diff()</code> will use forward differentiation for native Julia functions passed by themselves, if a native function is passed as a function of a <code>Sym</code>, e.g <code>f(x)</code>, or if a symbolic expression is passed, it will use symbolic differentiation.
+Originally meant to be called <code>diff()</code>, this apparently conflicted with <code>Base.diff()</code>. At least it's similar to <code>int()</code> now.
 <br><br>
+
+
 
 <h2 id="int">int</h2>
 <code>int(func; var, lims, order)</code>
-<p>Computes the <code>order</code>'th order integral from <code>lims[1]</code> to <code>lims[2]</code> of a function <code>func</code> \(: \mathbb R^n \rightarrow \mathbb R^n\) with respect to <code>var</code> using symbolic differentiation.</p>
+<p>Computes the <code>order</code>'th order integral from <code>lims[1]</code> to <code>lims[2]</code> of a function <code>func</code> \(: \mathbb R^n \rightarrow \mathbb R^n\) with respect to <code>var</code> using symbolic integration.</p>
 \[
 \int_{\textup{lims[1]}}^{\textup{lims[2]}} \textup{func}\ \ \textup{d var}
 \]
@@ -140,7 +144,8 @@ tpoly(E; var=m, order=2, point=1)</code></pre>
 returns the 2nd order Taylor polynomial of <code>m*c^2</code> with respect to <code>m</code> around <code>m</code> = 0
 
 <h4>notes</h4>
-This one was very helpful in my Linear Algebra and Analysis exam.
+This one was very helpful in my Linear Algebra and Analysis exam.<br>
+If <code>func</code> is a native Julia function the taylor polynomial is computed with <code>TaylorSeries.jl</code>. If it's a symbolic expression it is computed manually.
 
 
 <h1 id="discretemath">Discrete Math</h1>
