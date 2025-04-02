@@ -33,9 +33,9 @@
 </p>
 
 <h1 id="intro">Introduction</h1>
-<p>JellyFish is aiming to be a all-in-one symbolic and numeric computing environment, specifically geared towards mathematics and physics.
+<p>Jellyfish is aiming to be a all-in-one symbolic and numeric computing environment, specifically geared towards mathematics and physics.
  The aim is to bridge the gap between the speed and ease of use of CAS tools, and the versatility and performance of conventional programming languages.
- JellyFish currently exists as a Julia package, but many of the functions support Python interoperability, so you are able to use this package with JuliaPy.
+ Jellyfish currently exists as a Julia package, but many of the functions support Python interoperability, so you are able to use this package with JuliaPy.
  A proper compiled Python package is on the way.</p>
 
 <h1 id="quickstart">Quick Start</h1>
@@ -167,7 +167,7 @@ I initially wrote it from memory, having heard of Newton's method 2 years ago, t
 
 <h2 id="nlim">nlim</h2>
 <code>nlim(func, dest, dir)</code>
-<p>Computes the limit of a function <code>func</code> \(: \mathbb R \rightarrow \mathbb R^n\) approaching <code>dest</code> from <code>dir</code> numerically using Richardson Extrapolation.</p>
+<p>Computes the finite limit of a function <code>func</code> \(: \mathbb R \rightarrow \mathbb R^n\) approaching <code>dest</code> from <code>dir</code> numerically using Richardson Extrapolation.</p>
 \[
 \lim_{x \rightarrow \textup{dest}^{\textup{dir}}} \textup{func}(x)
 \]
@@ -187,9 +187,83 @@ I initially wrote it from memory, having heard of Newton's method 2 years ago, t
 </html>
 
 <h4>notes</h4>
-This function is a wrapper of <code>Richardson.extrapolate</code> from <a href="https://juliapackages.com/p/richardson">Richardson.jl</a>
+This function is a wrapper of <code>Richardson.extrapolate</code> from <a href="https://juliapackages.com/p/richardson">Richardson.jl</a><br><br>
+There is currently no system to detect when an infinite limit is being computed, make sure to sanity check before using the result (positive/negative values that are close to 0 or very large are usually an indicator of an infinite limit).
 
 
+<br>
+<br>
+
+<h2 id="properr">properr</h2>
+<code>propsem(vals, err, func, var)</code>
+<p>Computes the propagated error from an independent variable in the model function <code>func</code> \(: \mathbb R \rightarrow \mathbb R\) to a dependent variable (the output of the model function)</p>
+\[
+\lim_{x \rightarrow \textup{dest}^{\textup{dir}}} \textup{func}(x)
+\]
+
+<h4>arguments</h4>
+<code>func</code> - any callable with 1 <code>Number</code> argument returning n <code>Number</code>s<br>
+<code>dest</code> - any <code>Number</code><br>
+<code>dir </code> - the <code>+</code> or <code>-</code> function - optional (default <code>+</code>)<br>
+
+<h4>example usage</h4>
+	<code>nlim(f, 1)</code><br>
+	returns the limit of <code>f</code> approaching 1 from above<br>
+	<br>
+	<code>nlim(g, π, -)</code><br>
+	returns the limit of <code>g</code> approaching pi from below<br>
+</body>
+</html>
+
+<h4>notes</h4>
+This function is a wrapper of <code>Richardson.extrapolate</code> from <a href="https://juliapackages.com/p/richardson">Richardson.jl</a><br><br>
+There is currently no system to detect when an infinite limit is being computed, make sure to sanity check before using the result (positive/negative values that are close to 0 or very large are usually an indicator of an infinite limit).
+
+<h1 id="vectorcalc">Vector Calculus</h1>
+<h2 id="grad">grad</h2>
+<code>grad(field, var, order)</code><br><br>
+Computes the <code>order</code>'th order gradient of a scalar field <code>field</code>\(: \mathbb{R}^n \rightarrow \mathbb{R}\) with respect to <code>var</code>.
+
+\[
+
+\textup{grad(field, var, order)} \quad = \quad
+
+\nabla \textup{field} \quad = \quad
+
+\begin{pmatrix}
+\frac{\displaystyle \partial^{\textup{order}}\ \textup{field}}{\displaystyle \partial^{\textup{order}}\ \textup{var}[1]}\\
+\frac{\displaystyle \partial^{\textup{order}}\ \textup{field}}{\displaystyle \partial^{\textup{order}}\ \textup{var}[2]}\\
+\dots \\
+\frac{\displaystyle \partial^{\textup{order}}\ \textup{field}}{\displaystyle \partial^{\textup{order}}\ \textup{var}[n]}\\
+\end{pmatrix}\]
+
+<h4>arguments</h4>
+<code>field</code> Differentiable callable with 1 or more inputs and 1 output<br>
+<code>var</code> Vector of <code>Sym</code>s of same length as <code>field</code>, optional (default: collects free symbols automatically)<br>
+<code>order</code> Any <code>Number</code><br>, optional (default: 1)
+
+<h4>example usage</h4>
+Input
+<pre><code>@sym x,y
+f(x,y) = x^2 + x*y
+grad(f(x,y))</code></pre>
+Output
+<pre><code>2-element Vector{Any}:
+	2⋅x + y
+	x
+</code></pre>
+
+<br>
+
+Input
+<pre><code>@sym x,y
+f(x,y) = x^2 + x*y
+grad(f(x,y))</code></pre>
+Output
+<pre><code>2-element Vector{Any}:
+	2⋅x + y
+	x
+</code></pre>
 
 <h1 id="visualization">Visualization</h1>
 <h2 id="plot">plot</h2>

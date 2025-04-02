@@ -1,9 +1,9 @@
-function grad(func; var::Vector=collect(func.free_symbols), order::Int=1) 
+function grad(func; var::Vector=reverse(collect(func.free_symbols)), order::Int=1) 
 	#TODO: add support for vector fields
 
 	grad = []
 	for va in var
-		push!(grad, diff(func, var=va, order=order))
+		push!(grad, dif(func, var=va, order=order))
 	end
 
 	return grad
