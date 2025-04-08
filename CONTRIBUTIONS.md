@@ -6,6 +6,7 @@ discord: @vindrue
 as the project is small contributions are handled personally, anything helps, and i'll be happy to get you started :D
 
 General contribution rules:
-  Constants in CONSTANT_CASE, variables/functions/macros in snake_case, julia files in CamelCase.jl
-  Respect the user's clocks and bytes
-  Max line length of 128 characters, you can use line breaks to bypass this
+
+ - Constants in CONSTANT_CASE, variables/functions/macros in snake_case, julia files in CamelCase.jl
+ - Respect the user's clocks and bytes
+ - Max line length of 128 characters, you can use line breaks to bypass this
