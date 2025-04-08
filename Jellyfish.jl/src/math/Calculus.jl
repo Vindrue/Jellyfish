@@ -1,4 +1,4 @@
-function dif(func; var::SymPy.Sym=@sym(_x), order::Int=1)	
+function dif(func, var::SymPy.Sym=@sym(_x); order::Int=1)	
 	#if symbol is not specified
 	var = colsym(func, var)
 
@@ -11,7 +11,7 @@ function dif(func; var::SymPy.Sym=@sym(_x), order::Int=1)
 	return derivative
 end
 
-function int(func; var::SymPy.Sym=@sym(_x), lims::Tuple{Any, Any}=(nothing,nothing), order::Int=1)
+function int(func, var::SymPy.Sym=@sym(_x); lims::Tuple{Any, Any}=(nothing,nothing), order::Int=1)
 	if isempty(lims)
 		var = colsym(func, var)
 		

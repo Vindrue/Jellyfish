@@ -15,7 +15,26 @@ import PhysicalConstants.CODATA2022
 # Options
 
 SOLVEWARNINGS = true
+export SOLVEWARNINGS
 
+# sets
+#const SPS = sympy.S
+const ℕ = SymPy.sympy.Naturals()
+const ℤ = SymPy.sympy.Integers()
+const ℚ = SymPy.sympy.Rationals()
+const ℝ = SymPy.sympy.Reals()
+const ℂ = SymPy.sympy.Complexes()
+
+export ℕ,ℤ,ℚ,ℝ,ℂ
+
+
+const NATURALS  = ℕ
+const INTEGERS  = ℤ
+const RATIONALS = ℚ
+const REALS     = ℝ
+const COMPLEXES = ℂ
+
+export NATURALS,INTEGERS,RATIONALS,REALS,COMPLEXES
 
 # Submodules
 
@@ -30,7 +49,7 @@ include("math/NumericVectorCalculus.jl")
 include("math/NumericMath.jl")
 include("math/Statistics.jl")
 include("math/Solvers.jl")
-export dif, int, tpoly, nlim, nsolve, ndiv, ncurl, sem, propsem, chisq, grad, div, curl, solve
+export dif, int, tpoly, nlim, nsolve, ndiv, ncurl, sem, propsem, chisq, grad, divg, curl, solve
 
 include("legacy/2DPlotting.jl")
 include("legacy/PlotScalarField.jl")
@@ -44,6 +63,7 @@ export plot, plotscalarfield, reallybadsolver
 const _x = @sym _x
 const _y = @sym _y
 const _z = @sym _z
+export _x,_y,_z
 
 # math
 # perhaps include some of these in Constants.jl instead ?
@@ -54,20 +74,8 @@ const APERY = 1.20205690315959428539973816151144999076498629234049
 const CATALAN = 0.91596559417721901505460351493238411077414937428167
 const FEIGENBAUM_ALPHA = 4.66920160910299067185320382046620161725818557747576
 const FEIGENBAUM_DELTA = 2.50290787509589282228390287321821578638127137672714
+export e, GOLDEN, EULERGAMMA, APERY, CATALAN, FEIGENBAUM_ALPHA, FEIGENBAUM_DELTA
 
-# sets
-#const SPS = sympy.S
-const ℕ = SymPy.sympy.Naturals()
-const ℤ = SymPy.sympy.Integers()
-const ℚ = SymPy.sympy.Rationals()
-const ℝ = SymPy.sympy.Reals()
-const ℂ = SymPy.sympy.Complexes()
-
-const NATURALS  = ℕ
-const INTEGERS  = ℤ
-const RATIONALS = ℚ
-const REALS     = ℝ
-const COMPLEXES = ℂ
 
 
 end
