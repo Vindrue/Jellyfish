@@ -5,7 +5,7 @@ function physconst(name::String)
 		return Unitful.ustrip(getfield(CODATA2022, name))
 	catch e
 		if name == Symbol("c")
-			return Unitful.ustrip(getfield(CODATA2022, c_0))
+			return Unitful.ustrip(getfield(CODATA2022, Symbol("c_0")))
 		end
 		if name == Symbol("G_0")
 			return 7.7480917299e-5
@@ -17,7 +17,7 @@ function physconst(name::String)
 			return 96485.33212
 		end
 		if name == Symbol("alpha")
-			return Unitful.ustrip(getfield(CODATA2022, α))
+			return Unitful.ustrip(getfield(CODATA2022, Symbol("α")))
 		end
 		if name == Symbol("K_J")
 			return 483597.8484e9
@@ -26,7 +26,7 @@ function physconst(name::String)
 			return 2.067833848e-15
 		end
 		if name == Symbol("R_oo")
-			return Unitful.ustrip(getfield(CODATA2022, R_∞))
+			return Unitful.ustrip(getfield(CODATA2022, Symbol("R_∞")))
 		end
 		if name == Symbol("R_K")
 			return 25812.80745

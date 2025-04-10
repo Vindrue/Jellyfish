@@ -33,7 +33,7 @@ function int(func, var::SymPy.Sym=@sym(_x); lims::Tuple{Any, Any}=(nothing,nothi
 	return expr
 end
 
-function tpoly(func, var::SymPy.Sym; order::Int=1, point::Number=0)
+function tpoly(func, var::SymPy.Sym=_x; order::Int=1, point::Number=0)
 	#if native Julia function use TaylorSeries package
 	if func isa Function
 		poly = 0

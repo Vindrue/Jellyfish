@@ -17,6 +17,26 @@ import PhysicalConstants.CODATA2022
 SOLVEWARNINGS = true
 export SOLVEWARNINGS
 
+
+# Constants
+
+# system
+const _x = @sym _x
+const _y = @sym _y
+const _z = @sym _z
+export _x,_y,_z
+
+# math
+# perhaps include some of these in Constants.jl instead ?
+const e = Base.MathConstants.e
+const GOLDEN = Base.MathConstants.golden
+const EULERGAMMA = Base.MathConstants.γ
+const APERY = 1.20205690315959428539973816151144999076498629234049
+const CATALAN = 0.91596559417721901505460351493238411077414937428167
+const FEIGENBAUM_ALPHA = 4.66920160910299067185320382046620161725818557747576
+const FEIGENBAUM_DELTA = 2.50290787509589282228390287321821578638127137672714
+export e, GOLDEN, EULERGAMMA, APERY, CATALAN, FEIGENBAUM_ALPHA, FEIGENBAUM_DELTA
+
 # sets
 #const SPS = sympy.S
 const ℕ = SymPy.sympy.Naturals()
@@ -57,24 +77,6 @@ include("legacy/ReallyBadSolver.jl")
 export plot, plotscalarfield, reallybadsolver
 
 
-# Constants
-
-# system
-const _x = @sym _x
-const _y = @sym _y
-const _z = @sym _z
-export _x,_y,_z
-
-# math
-# perhaps include some of these in Constants.jl instead ?
-const e = Base.MathConstants.e
-const GOLDEN = Base.MathConstants.golden
-const EULERGAMMA = Base.MathConstants.γ
-const APERY = 1.20205690315959428539973816151144999076498629234049
-const CATALAN = 0.91596559417721901505460351493238411077414937428167
-const FEIGENBAUM_ALPHA = 4.66920160910299067185320382046620161725818557747576
-const FEIGENBAUM_DELTA = 2.50290787509589282228390287321821578638127137672714
-export e, GOLDEN, EULERGAMMA, APERY, CATALAN, FEIGENBAUM_ALPHA, FEIGENBAUM_DELTA
 
 
 

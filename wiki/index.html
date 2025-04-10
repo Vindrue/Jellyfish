@@ -15,7 +15,7 @@
 <a href="#intro">Introduction</a><br>
 <a href="#quickstart">Quick Start</a><br>
 <a href="#calculus">Calculus</a><br>
-- <a href="#dif">diff</a><br>
+- <a href="#dif">dif</a><br>
 - <a href="#int">int</a><br>
 - <a href="#tpoly">tpoly</a><br>
 <a href="#discretemath">Discrete Math</a><br>
@@ -33,29 +33,41 @@
 </p>
 
 <h1 id="intro">Introduction</h1>
-<p>Jellyfish is aiming to be a all-in-one symbolic and numeric computing environment, specifically geared towards mathematics and physics.
+<p>Jellyfish is aiming to be a all-in-one symbolic and numeric computing environment, specifically geared towards physics.
  The aim is to bridge the gap between the speed and ease of use of CAS tools, and the versatility and performance of conventional programming languages.
  Jellyfish currently exists as a Julia package, but many of the functions support Python interoperability, so you are able to use this package with JuliaPy.
  A proper compiled Python package is on the way.</p>
 
 <h1 id="quickstart">Quick Start</h1>
 <p>
-Use the <code>@sym</code> macro to define a variable as a symbol/<code>Sym</code>. 
+Use the <code>@sym</code> macro to define a variable as a symbol/<code>Sym</code>. This will make the variable usable for symbolic mathematics.
 </p>
-<pre><code>using JellyFish
+<pre><code>using Jellyfish
 @sym x,y</pre></code>
+<u>Symbolic</u> functions work with symbolic inputs, eg. for a native function <code>f</code> pass <code>f(x)</code> as the input where <code>x</code> is a <code>Sym</code>. <u>Numeric</u> functions work with numeric inputs, so you can pass <code>f</code> directly, without a need to use <code>@sym</code> anywhere. Most <u>Numeric</u> functions are also <u>Symbolic</u>.
+<pre><code>f(x) = x^2
+
+dif(f(x))    # dif() is Symbolic
+
+nsolve(f)    # nsolve() is both Numeric...
+nsolve(f(x)) # ...and Symbolic</code></pre>
+<p>
+Symbolic outputs are pretty formatted when printing the result. 
+</p>
+ <img src="img/prettyformatting.png" alt="integrating a function to the second order with respect to y"> 
 
 <p>
-If you need physical constants to work with you can import them from <code>consts()</code>.
+This does not have an effect on their usability. They can be saved to variables and called as a symbolic expression as usual. <br><br>If you need physical constants to work with you can import them from <code>physconst()</code>.
 </p>
 
-<pre><code>c = consts("c")</pre></code>
+<pre><code>c = physconst("c")</pre></code>
 
-<p>You can now start mathing the math.</p>
+<p>You can now start your computing adventure, powered by the objectively coolest aquatic animal.</p>
+<br><br><br>
 
 <h1 id="calculus">Calculus</h1>
 <h2 id="dif">dif</h2>
-<code>dif(func; var, order)</code>
+<code>dif(func; var, order)</code> - <u>Symbolic</u><br>
 <p>Computes the <code>order</code>'th order partial derivative of a callable <code>func</code> \(: \mathbb R^n \rightarrow \mathbb R^n\) with respect to <code>var</code> using symbolic differentiation.</p>
 \[
 \frac{\partial^{\textup{order}}\ \textup{func}}{\partial^{\textup{order}}\ \textup{sym}}
@@ -66,64 +78,55 @@ If you need physical constants to work with you can import them from <code>const
 <code>order</code> - any <code>Number</code>
 
 <h4>example usage</h4>
-
-<pre><code>f(x) = sin(x)
-@sym x
-dif(f(x))</code></pre>
-returns the 1st derivative of <code>f</code> as a symbolic expression
-
-<pre><code>dif(2*x)
+<pre><code>@sym x
+dif(sin(x))</code></pre>
+<pre><code>cos(x)
 </code></pre>
-returns the 1st derivative of <code>2*x</code> as a symbolic expression
-
-<pre><code>@sym y
-g(x,y) = x + y
-dif(g(x,y), sym=y)</pre></code>
-returns the 1st derivative of <code>g</code> with respect to <code>y</code> as a symbolic expression
-
-<pre><code>dif(g(x,y), sym=x, order=3)</code></pre>
-returns the 3rd derivative of <code>g</code> with respect to <code>x</code> as a symbolic expression
+<br>
+<pre><code>@sym x,y
+f(x,y) = y*x^3
+dif(f(x,y), x, order=2)</code></pre>
+<pre><code>6⋅x⋅y</code></pre>
 
 <h4>notes</h4>
 Originally meant to be called <code>diff()</code>, this apparently conflicted with <code>Base.diff()</code>. At least it's similar to <code>int()</code> now.
-<br><br>
+<br><br><br>
 
 
 
 <h2 id="int">int</h2>
-<code>int(func; var, lims, order)</code>
-<p>Computes the <code>order</code>'th order integral from <code>lims[1]</code> to <code>lims[2]</code> of a function <code>func</code> \(: \mathbb R^n \rightarrow \mathbb R^n\) with respect to <code>var</code> using symbolic integration.</p>
+<code>int(func; var, lims, order)</code> - <u>Symbolic</u><br>
+<p>Computes the <code>order</code>'th order integral from <code>lims[1]</code> to <code>lims[2]</code> of a function <code>func</code> \(: \mathbb R^n \rightarrow \mathbb R\) with respect to <code>var</code> using symbolic integration.</p>
 \[
 \int_{\textup{lims[1]}}^{\textup{lims[2]}} \textup{func}\ \ \textup{d var}
 \]
 <h4>arguments</h4>
 <code>func</code> - any function where the set of discontinuities have measure 0<br>
-<code>var</code> - any <code>Sym</code> - optional for single-symbol functions<br>
+<code>var</code> - any <code>Sym</code> - optional for functions in \(\mathbb R\)<br>
 <code>lims</code> - any <code>Tuple{Number, Number}</code> - optional (if not specified the indefinite integral will be computed)<br>
 <code>order</code> - any <code>Number</code> - optional (default=1)
 
 <h4>example usage</h4>
 <pre><code>@sym x
-f(x) = x
-int(f(x))</code></pre>
-returns the 1st order indefinite integral of <code>f</code> with respect to <code>x</code> as a symbolic expression
-
-<pre><code>int(f(x), lims=(0,oo))</code></pre>
-returns the 1st order definite integral of <code>f</code> from <code>0</code> to <code>oo</code>(∞) as a symbolic expression
-
-<pre><code>@sym y
-g(x,y) = x + y
-int(g(x,y), var=y, lims=(-2, π), order=2)</pre></code>
-returns the 1st order definite integral of <code>g</code> from <code>-2</code> to <code>π</code> with respect to <code>y</code> as a symbolic expression
-
-<h4>notes</h4>
-<p>"People" who call indefinite integrals "antiderivatives" should be exiled.</p>
-<br><br>
+int(x)</code></pre>
+<pre><code> 2
+x 
+──
+2 </code></pre>
+<br>
+<pre><code>@sym x,y
+f(x,y) = y*x^3
+int(f(x,y), y, order=2)</code></pre>
+<pre><code> 3  3
+x ⋅y 
+─────
+  6 </code></pre>
+<br><br><br>
 
 
 
 <h2 id="tpoly">tpoly</h2>
-<code>tpoly(func; var, order, point)</code><br>
+<code>tpoly(func; var, order, point)</code> - <u>Symbolic</u><br>
 Computes the <code>order</code>th order Taylor polynomial of <code>func</code> around <code>point</code> with respect to <code>var</code>.
 \[
 \sum_{n=0}^{\textup{order}} \frac{\textup{func}^{(n)}(\textup{point})}{n!} (\textup{var} - \textup{point})^n
@@ -135,9 +138,8 @@ Computes the <code>order</code>th order Taylor polynomial of <code>func</code> a
 <code>point</code> - any <code>Number</code> - optional (default = 0)<br>
 
 <h4>example usage</h4>
-<pre><code>f(x) = sin(x)
-tpoly(f)</code></pre>
-returns the 1st order Taylor polynomial of <code>f</code> around 0.
+<pre><code>tpoly(sin(x), x)
+</code></pre>
 <pre><code>@sym m,c
 E = m * c^2
 tpoly(E; var=m, order=2, point=1)</code></pre>
