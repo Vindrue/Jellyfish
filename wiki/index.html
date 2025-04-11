@@ -126,7 +126,7 @@ x ⋅y
 
 
 <h2 id="tpoly">tpoly</h2>
-<code>tpoly(func; var, order, point)</code> - <u>Symbolic</u><br>
+<code>tpoly(func; var, order, point)</code> - <u>Numeric</u>, <u>Symbolic</u><br>
 Computes the <code>order</code>th order Taylor polynomial of <code>func</code> around <code>point</code> with respect to <code>var</code>.
 \[
 \sum_{n=0}^{\textup{order}} \frac{\textup{func}^{(n)}(\textup{point})}{n!} (\textup{var} - \textup{point})^n
@@ -138,8 +138,12 @@ Computes the <code>order</code>th order Taylor polynomial of <code>func</code> a
 <code>point</code> - any <code>Number</code> - optional (default = 0)<br>
 
 <h4>example usage</h4>
-<pre><code>tpoly(sin(x), x)
-</code></pre>
+<pre><code>f(x) = sin(x)
+tpoly(f)</code></pre>
+
+<pre><code>1.0⋅_x</code></pre>
+
+
 <pre><code>@sym m,c
 E = m * c^2
 tpoly(E; var=m, order=2, point=1)</code></pre>

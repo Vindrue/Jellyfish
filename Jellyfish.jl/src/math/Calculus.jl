@@ -33,28 +33,39 @@ function int(func, var::SymPy.Sym=@sym(_x); lims::Tuple{Any, Any}=(nothing,nothi
 	return expr
 end
 
-function tpoly(func, var::SymPy.Sym=_x; order::Int=1, point::Number=0)
-	#if native Julia function use TaylorSeries package
+TaylorSeries.displayBigO(false)
+function tpoly(func, var = false; order::Int=1, point::Number=0)
+
+	# if native Julia function use TaylorSeries package
 	if func isa Function
+		if var == false
+			@sym _x
+		end
 		poly = 0
 
-		return TaylorSeries.taylor_expand(func, point, order=order)
+		tpoly = TaylorSeries.taylor_expand(func, point, order=order)
+		tpoly = tpoly(_x)
+		return tpoly
 	end
 
-	#collect variables in expression
+	if var == false
+		var = collect(func.free_symbols)[1]
+	end
+
+	# collect variables in expression
 	fs = collect(func.free_symbols)
 
-	#put them into tuples, and into a list(for .subs())
+	# put them into tuples, and into a list(for .subs())
 	fslist = []
 	for i in 1:length(fs)
 		push!(fslist, (fs[i], fs[i]))
 	end
 
-	#replace variable that gets evaluated in the taylor polynomial with point
+	# replace variable that gets evaluated in the taylor polynomial with point
 	varindex = (findall(x -> x == (var, var), fslist))[1]
 	fslist[varindex] = (var, point)
 
-	#taylor polynomial calc (super epic)
+	# taylor polynomial calc (super epic)
 	poly = 0
 	for n in 0:order
 		poly = poly + ((SymPy.sympy.Derivative(func, var, n)).subs(fslist).doit()/factorial(n)) * (var-point)^n

@@ -15,16 +15,23 @@ import PhysicalConstants.CODATA2022
 # Options
 
 SOLVEWARNINGS = true
+TaylorSeries.displayBigO(false)
 export SOLVEWARNINGS
 
+# Submodules
+
+include("utils/MathUtils.jl")
+include("utils/Consts.jl")
+include("utils/InputChecks.jl")
+export @sym, physconst
 
 # Constants
 
 # system
-const _x = @sym _x
-const _y = @sym _y
-const _z = @sym _z
-export _x,_y,_z
+#const _x = @sym _x
+#const _y = @sym _y
+#const _z = @sym _z
+#export _x,_y,_z
 
 # math
 # perhaps include some of these in Constants.jl instead ?
@@ -56,12 +63,7 @@ const COMPLEXES = ℂ
 
 export NATURALS,INTEGERS,RATIONALS,REALS,COMPLEXES
 
-# Submodules
 
-include("utils/MathUtils.jl")
-include("utils/Consts.jl")
-include("utils/InputChecks.jl")
-export @sym, physconst
 
 include("math/Calculus.jl")
 include("math/VectorCalculus.jl")
