@@ -49,3 +49,19 @@ ul > li {
 ul > li:before {
   content: "- ";
 }
+
+h1 {
+  font-size: 2em;  /* Ensure consistent sizing */
+}
+
+p {
+  margin: 0;
+}
+
+body > section {
+  margin-bottom: 5em;
+}
+
+section > section {
+  margin-bottom: 3em;
+}
