@@ -71,7 +71,7 @@ include("math/NumericVectorCalculus.jl")
 include("math/NumericMath.jl")
 include("math/Statistics.jl")
 include("math/Solvers.jl")
-export dif, int, tpoly, nlim, nsolve, ndiv, ncurl, sem, propsem, chisq, grad, divg, curl, solve
+export dif, int, tpoly, nlim, nsolve, ndiv, ncurl, sem, propsem, zscore, chisq, grad, divg, curl, solve
 
 include("legacy/2DPlotting.jl")
 include("legacy/PlotScalarField.jl")

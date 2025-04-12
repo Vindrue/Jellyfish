@@ -2,15 +2,16 @@ function sem(σ, n)
 	return σ/sqrt(n)
 end
 
-function zscore(a::Tuple{Number, Number}, b::Tuple{Number, Number})
-	D = abs(a[1] - b[1])
+function zscore(x, μ, σ)
+	#a::Tuple{Number, Number}, b::Tuple{Number, Number}
+	#D = abs(a[1] - b[1])
 
-	Δ = sqrt(a[2]^2 + b[2]^2)
+	#Δ = sqrt(a[2]^2 + b[2]^2)
 
-	return D/Δ
+	return (x-μ)/σ
 end
 
-function propsem(vals::Vector{Number}, sem::Vector{Number}, func, var::SymPy.Sym=@sym(_x))
+function propsem(vals::Vector, sem::Vector, func; var::SymPy.Sym=@sym(_x))
 	if !checklenmatch([vals, sem])
 		error("length mismatch between \"vals\" and \"sem\" arguments")
 	end

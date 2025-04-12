@@ -36,6 +36,6 @@ function curl(field::Vector, var::Vector)
 			dif(field[1], var[3]) - dif(field[3], var[1]),
 			dif(field[2], var[1]) - dif(field[1], var[2])]
 	else
-		return error("curl() currently only supports 2D and 3D scalar fields")
+		return error("curl() currently only supports 2D and 3D vector fields")
 	end
 end

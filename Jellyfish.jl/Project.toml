@@ -1,7 +1,7 @@
 name = "Jellyfish"
 uuid = "aa7d2582-1654-43a3-b0fa-2d07591e56ac"
 authors = ["Vindrue"]
-version = "0.1.0"
+version = "0.2.0"
 
 [deps]
 PhysicalConstants = "5ad8b20f-a522-5ce9-bfc9-ddf1d5bda6ab"

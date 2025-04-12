@@ -38,7 +38,8 @@ function tpoly(func, var = false; order::Int=1, point::Number=0)
 
 	# if native Julia function use TaylorSeries package
 	if func isa Function
-		if var == false
+		if isa(var, Bool) && var == false # TODO: decide on some kind of consistent system for detecting
+						  # defaults (Python gc my worst enemy)
 			@sym _x
 		end
 		poly = 0
@@ -48,7 +49,7 @@ function tpoly(func, var = false; order::Int=1, point::Number=0)
 		return tpoly
 	end
 
-	if var == false
+	if isa(var, Bool) && var == false
 		var = collect(func.free_symbols)[1]
 	end
 

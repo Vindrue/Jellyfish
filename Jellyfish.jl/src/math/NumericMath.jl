@@ -1,4 +1,4 @@
-function nlim(func, dest::Number, dir::Union{typeof(+), typeof(-)}=+)
+function nlim(func, dest::Number; dir::Union{typeof(+), typeof(-)}=+)
 
 	#use richardson extrapolation to find limits
 	res = Richardson.extrapolate(dir(0,0.0001), x0=dest, breaktol=Inf, maxeval=3) do x
@@ -9,15 +9,21 @@ function nlim(func, dest::Number, dir::Union{typeof(+), typeof(-)}=+)
 	return res[1]
 end
 
-function nsolve(func; estimate::Number=1.001, iterations::Number=50)
+function nsolve(func; estimate::Number=1.001, iterations::Number=10)
 	root = estimate
+	
+	if isa(func, Function)
+		@sym _x
+		func = func(_x)
+	end
+
 	for n in 1:iterations
 		# TODO: can be optimized by moving the try-catch block outside of the for loop
 		# actually passing differences could be their own little system
 		try
-			root = root - func(root)/dif(func)(root)
+			root = float(root - func(root)/dif(func)(root))
 		catch e
-			root = root - func(root)/dif(func)
+			root = float(root - func(root)/dif(func))
 		end
 	end
 	return root
