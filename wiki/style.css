@@ -1,5 +1,11 @@
 body {
   font-family: Calibri, sans-serif; /* Example: Arial with a sans-serif fallback */
+  margin: 0;
+
+  @media (min-width: 768px) {
+    margin-left: 12%;
+    margin-right: 12%;
+  }
 }
 
 
