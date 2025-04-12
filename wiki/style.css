@@ -36,3 +36,16 @@ pre code {
         display: block;
         width: 100%;
 }
+
+ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+ul > li {
+  list-style-type: none;
+}
+
+ul > li:before {
+  content: "- ";
+}
