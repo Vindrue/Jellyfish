@@ -13,87 +13,100 @@
 <meta charset="UTF-8" />
 <h1>Contents</h1>
 
-<p>
-<a href="#intro">Introduction</a><br>
-<a href="#quickstart">Quick Start</a><br>
-<a href="#solvers">Solvers</a><br>
-- <a href="#solve">solve</a><br>
-- <a href="#nsolve1">nsolve</a><br>
-<a href="#calculus">Calculus</a><br>
-- <a href="#dif">dif</a><br>
-- <a href="#int">int</a><br>
-- <a href="#tpoly">tpoly</a><br>
-<a href="#discretemath">Discrete Math</a><br>
-- <a href="#nsolve2">nsolve</a><br>
-- <a href="#nlim">nlim</a><br>
-<a href="#vectorcalc">Vector Calculus</a><br>
-- <a href="#grad">grad</a><br>
-- <a href="#divg">divg</a><br>
-- <a href="#curl">curl</a><br>
-<a href="#stats">Statistics</a><br>
-- <a href="#sem">sem</a><br>
-- <a href="#zscore">zscore</a><br>
-<a href="#utils">Utilities</a><br>
-- <a href="#physconst">physconst</a><br>
-</p><br>
+<nav>
+    <p><a href="#intro">Introduction</a></p>
+<p><a href="#quickstart">Quick Start</a></p>
+<p><a href="#solvers">Solvers</a></p>
+<ul>
+    <li><a href="#solve">solve</a></li>
+    <li><a href="#nsolve1">nsolve</a></li>
+</ul>
+<p><a href="#calculus">Calculus</a></p>
+<ul>
+    <li><a href="#dif">dif</a></li>
+    <li><a href="#int">int</a></li>
+    <li><a href="#tpoly">tpoly</a></li>
+</ul>
+<p><a href="#discretemath">Discrete Math</a></p>
+<ul>
+    <li><a href="#nsolve2">nsolve</a></li>
+    <li><a href="#nlim">nlim</a></li>
+</ul>
+<p><a href="#vectorcalc">Vector Calculus</a></p>
+<ul>
+    <li><a href="#grad">grad</a></li>
+    <li><a href="#divg">divg</a></li>
+    <li><a href="#curl">curl</a></li>
+</ul>
+<p><a href="#stats">Statistics</a></p>
+<ul>
+    <li><a href="#sem">sem</a></li>
+    <li><a href="#zscore">zscore</a></li>
+</ul>
+<p><a href="#utils">Utilities</a></p>
+<ul>
+    <li><a href="#physconst">physconst</a></li>
+</ul>
+</nav>
 
+
+<section>
 <h1 id="intro">Introduction</h1>
-<p>Jellyfish is aiming to be a all-in-one symbolic and numeric computing environment, specifically geared towards physics.
- The aim is to bridge the gap between the speed and ease of use of CAS tools, and the versatility and performance of conventional programming languages.
- Jellyfish currently exists as a Julia package, but many of the functions support Python interoperability, so you are able to use this package with JuliaPy.
- A proper compiled Python package is on the way.</p><br>
+<p>Jellyfish is aiming to be a all-in-one symbolic and numeric computing environment, specifically geared towards physics. The aim is to bridge the gap between the speed and ease of use of CAS tools, and the versatility and performance of conventional programming languages. Jellyfish currently exists as a Julia package, but many of the functions support Python interoperability, so you are able to use this package with JuliaPy. A proper compiled Python package is on the way.</p>
+</section>
 
+<section>
 <h1 id="quickstart">Quick Start</h1>
-<p>
-Use the <code>@sym</code> macro to define a variable as a symbol/<code>Sym</code>. This will make the variable usable for symbolic mathematics.
-</p>
+<p>Use the <code>@sym</code> macro to define a variable as a symbol/<code>Sym</code>. This will make the variable usable for symbolic mathematics.</p>
 <pre><code>using Jellyfish
 @sym x,y</pre></code>
-<u>Symbolic</u> functions work with symbolic inputs, eg. for a native function <code>f</code> pass <code>f(x)</code> as the input where <code>x</code> is a <code>Sym</code>. <u>Numeric</u> functions work with numeric inputs, so you can pass <code>f</code> directly, without a need to use <code>@sym</code> anywhere. Most <u>Numeric</u> functions are also <u>Symbolic</u>.
+<p><u>Symbolic</u> functions work with symbolic inputs, eg. for a native function <code>f</code> pass <code>f(x)</code> as the input where <code>x</code> is a <code>Sym</code>. <u>Numeric</u> functions work with numeric inputs, so you can pass <code>f</code> directly, without a need to use <code>@sym</code> anywhere. Most <u>Numeric</u> functions are also <u>Symbolic</u>.</p>
 <pre><code>f(x) = x^2
 
 dif(f(x))    # dif() is Symbolic
 
 nsolve(f)    # nsolve() is both Numeric...
 nsolve(f(x)) # ...and Symbolic</code></pre>
-<p>
-Symbolic outputs are pretty formatted when printing the result. 
-</p>
- <img src="img/prettyformatting.png" alt="integrating a function to the second order with respect to y"> 
+<p>Symbolic outputs are pretty formatted when printing the result.</p>
+<img src="img/prettyformatting.png" alt="integrating a function to the second order with respect to y"> 
 
-<p>
-This does not have an effect on their usability. They can be saved to variables and called as a symbolic expression as usual. <br><br>If you need physical constants to work with you can import them from <code>physconst()</code>.
-</p>
+<p>This does not have an effect on their usability. They can be saved to variables and called as a symbolic expression as usual.</p>
+<p>If you need physical constants to work with you can import them from <code>physconst()</code>.</p>
 
-<pre><code>c = physconst("c")</pre></code>
+<pre><code>c = physconst("c")</code></pre>
 
 <p>You can now start your computing adventure, powered by the objectively coolest aquatic animal.</p>
-<br><br><br><br><br><br>
+</section>
 
 
 
+<section>
 <h1 id="solvers">Solvers</h1>
+
+<section>
 <h2 id="solve">solve</h2>
-<code>solve(eq, var)</code> - <u>Symbolic</u>
+<p><code>solve(eq, var)</code> - <u>Symbolic</u></p>
 <p>Solves an n-dimensional system of equations <code>eq</code> with respect to <code>var</code> symbolically.</p>
 \[
 \textup{Solves for var in:} \quad \{\textup{eq[1](var)} = 0,\ \textup{eq[2](var)} = 0,\ \dots\ \textup{eq}[n]\textup{(var)}\}
 \]
 
 <h4>arguments</h4>
-<code>eq</code> Symbolic callable or tuple of symbolic callables <br>
-<code>var</code> Any <code>Sym</code> or tuple of <code>Sym</code>s equal in length or shorter than <code>eq</code> <br>
+<p><code>eq</code> Symbolic callable or tuple of symbolic callables</p>
+<p><code>var</code> Any <code>Sym</code> or tuple of <code>Sym</code>s equal in length or shorter than <code>eq</code></p>
 
 <h4>example usage</h4>
 <pre><code>@sym x
 solve(x-1)</code></pre>
 <pre><code>Dict{SymPyCore.Sym{PyCall.PyObject}, SymPyCore.Sym{PyCall.PyObject}} with 1 entry:
-  x => 1</code></pre> <br>
+  x => 1</code></pre>
+<br>
 
 <pre><code>@sym x,y
 solve((x+y-1, x-0.5))[y]
 </code></pre>
-<pre><code>0.500000000000000</code></pre><br>
+<pre><code>0.500000000000000</code></pre>
+<br>
 
 <pre><code>@sym e,m,c
 solve((e-m*c^2, c-physconst("c")), (m,c))</code></pre>
@@ -101,30 +114,32 @@ solve((e-m*c^2, c-physconst("c")), (m,c))</code></pre>
  (1.11265005605362e-17*e, 299792458.000000)</code></pre>
 
 <h4>known issues</h4>
-Transcendental function can currently be solved, although the output is difficult to read and parse
+<p>Transcendental function can currently be solved, although the output is difficult to read and parse</p>
 
 <h4>notes</h4>
-Many hours were spent causing segfaults, until it was discovered that PyJulia's garbage collector clears global variables making domain solving impossible with the planned implementation.
-<br><br><br>
+<p>Many hours were spent causing segfaults, until it was discovered that PyJulia's garbage collector clears global variables making domain solving impossible with the planned implementation.</p>
+</section>
 
 
 
+<section>
 <h2 id="nsolve1">nsolve</h2>
-<code>nsolve(func; estimate, iterations)</code> - <u>Numeric</u>, <u>Symbolic</u><br>
+<p><code>nsolve(func; estimate, iterations)</code> - <u>Numeric</u>, <u>Symbolic</u></p>
 <p>Numerically finds a root of <code>func</code> \(: \mathbb R \rightarrow \mathbb R\) using the Newton-Raphson method with <code>estimate</code> as a starting guess and <code>iterations</code> iterations.</p>
 \[
 \textup{Solves for} \ x\ \textup{in:} \quad \textup{func}(x) = 0
 \]
 <h4>arguments</h4>
-<code>func</code> - any continuous callable taking 1 <code>Number</code> and returning 1 <code>Number</code><br>
-<code>estimate</code> - any <code>Number</code> - optional (default = 0)<br>
-<code>iterations</code> - any <code>Int</code> - optional (default = 10)<br>
+<p><code>func</code> - any continuous callable taking 1 <code>Number</code> and returning 1 <code>Number</code></p>
+<p><code>estimate</code> - any <code>Number</code> - optional (default = 0)</p>
+<p><code>iterations</code> - any <code>Int</code> - optional (default = 10)</p>
 
 <h4>example usage</h4>
-<u>Numeric</u>
+<p><u>Numeric</u></p>
 <pre><code>f(x) = x-1
 nsolve(f)</code></pre>
-<pre><code>1.0</code></pre><br>
+<pre><code>1.0</code></pre>
+<br>
 <u>Symbolic</u>
 <pre><code>@sym x
 nsolve(x^2-3)</code></pre>
@@ -135,25 +150,26 @@ nsolve(x^2, estimate=0.01, iterations=15)</code></pre>
 <pre><code>3.0517578125e-7</code></pre>
 
 <h4>notes</h4>
-I initially wrote it from memory, having heard of Newton's method 2 years ago, the result was a solver that only worked for strictly growing/shrinking functions. It's still included in the package as <code>Jellyfish.reallybadsolver()</code>.
-<br><br><br><br><br><br>
+<p>I initially wrote it from memory, having heard of Newton's method 2 years ago, the result was a solver that only worked for strictly growing/shrinking functions. It's still included in the package as <code>Jellyfish.reallybadsolver()</code>.</p>
+</section>
+</section>
 
 
 
 
-
-
+<section>
 <h1 id="calculus">Calculus</h1>
+<section>
 <h2 id="dif">dif</h2>
-<code>dif(func; var, order)</code> - <u>Symbolic</u><br>
+<p><code>dif(func; var, order)</code> - <u>Symbolic</u></p>
 <p>Computes the <code>order</code>'th order partial derivative of a callable <code>func</code> \(: \mathbb R^n \rightarrow \mathbb R^n\) with respect to <code>var</code> using symbolic differentiation.</p>
 \[
 \frac{\partial^{\textup{order}}\ \textup{func}}{\partial^{\textup{order}}\ \textup{sym}}
 \]	
 <h4>arguments</h4>
-<code>func</code> - any symbolic differentiable callable<br>
-<code>var</code> - any <code>Sym</code> - optional for functions defined in \(\mathbb R\)<br>
-<code>order</code> - any <code>Number</code>
+<p><code>func</code> - any symbolic differentiable callable</p>
+<p><code>var</code> - any <code>Sym</code> - optional for functions defined in \(\mathbb R\)</p>
+<p><code>order</code> - any <code>Number</code></p>
 
 <h4>example usage</h4>
 <pre><code>@sym x
@@ -168,21 +184,22 @@ dif(f(x,y), x, order=2)</code></pre>
 
 <h4>notes</h4>
 Originally meant to be called <code>diff()</code>, this apparently conflicted with <code>Base.diff()</code>. At least it's similar to <code>int()</code> now.
-<br><br><br>
+</section>
 
 
 
+<section>
 <h2 id="int">int</h2>
-<code>int(func; var, lims, order)</code> - <u>Symbolic</u><br>
+<p><code>int(func; var, lims, order)</code> - <u>Symbolic</u></p>
 <p>Computes the <code>order</code>'th order integral from <code>lims[1]</code> to <code>lims[2]</code> of a function <code>func</code> \(: \mathbb R^n \rightarrow \mathbb R\) with respect to <code>var</code> using symbolic integration.</p>
 \[
 \int_{\textup{lims[1]}}^{\textup{lims[2]}} \mathop{\dots}\limits_{\textup{order}} \int \textup{func}\ \ \textup{d var}
 \]
 <h4>arguments</h4>
-<code>func</code> - any symbolic callable where the set of discontinuities have measure 0<br>
-<code>var</code> - any <code>Sym</code> - optional for functions defined in \(\mathbb R\)<br>
-<code>lims</code> - any <code>Tuple{Number, Number}</code> - optional (if not specified the indefinite integral will be computed)<br>
-<code>order</code> - any <code>Number</code> - optional (default=1)
+<p><code>func</code> - any symbolic callable where the set of discontinuities have measure 0</p>
+<p><code>var</code> - any <code>Sym</code> - optional for functions defined in \(\mathbb R\)</p>
+<p><code>lims</code> - any <code>Tuple{Number, Number}</code> - optional (if not specified the indefinite integral will be computed)</p>
+<p><code>order</code> - any <code>Number</code> - optional (default=1)</p>
 
 <h4>example usage</h4>
 <pre><code>@sym x
@@ -199,31 +216,32 @@ int(f(x,y), y, order=2)</code></pre>
 x ⋅y 
 ─────
   6 </code></pre>
-<br><br><br>
+</section>
 
 
 
+<section>
 <h2 id="tpoly">tpoly</h2>
-<code>tpoly(func, var; order, point)</code> - <u>Numeric</u>, <u>Symbolic</u><br>
+<p><code>tpoly(func, var; order, point)</code> - <u>Numeric</u>, <u>Symbolic</u></p>
 <p>Computes the <code>order</code>th order Taylor polynomial of <code>func</code> around <code>point</code> with respect to <code>var</code>.</p>
 \[
 \sum_{n=0}^{\textup{order}} \frac{\textup{func}^{(n)}(\textup{point})}{n!} (\textup{var} - \textup{point})^n
 \]
 <h4>arguments</h4>
-<code>func</code> - any callable<br>
-<code>var</code> - any <code>Sym</code> - optional, required if <code>func</code> is symbolic<br>
-<code>order</code> - any <code>Int</code> - optional (default = 1)<br>
-<code>point</code> - any <code>Number</code> - optional (default = 0)<br>
+<p><code>func</code> - any callable</p>
+<p><code>var</code> - any <code>Sym</code> - optional, required if <code>func</code> is symbolic</p>
+<p><code>order</code> - any <code>Int</code> - optional (default = 1)</p>
+<p><code>point</code> - any <code>Number</code> - optional (default = 0)</p>
 
 <h4>example usage</h4>
-<u>Numeric</u>
+<p><u>Numeric</u></p>
 <pre><code>f(x) = sin(x)
 tpoly(f)</code></pre>
 
 <pre><code>1.0⋅_x</code></pre>
 <br>
 
-<u>Symbolic</u>
+<p><u>Symbolic</u></p>
 <pre><code>@sym x
 tpoly(exp(x))</code></pre>
 <pre><code>x + 1</code></pre>
@@ -235,33 +253,37 @@ x ⋅(y - π) ⋅ℯ                 π⋅x    π⋅x
 ──────────────── + x⋅(y - π)⋅ℯ    + ℯ   
        2 </code></pre>
 <h4>notes</h4>
-This one was very helpful in my Linear Algebra and Analysis exam.<br>
-If <code>func</code> is a native Julia function the taylor polynomial is computed with <a href="https://juliapackages.com/p/taylorseries"><code>TaylorSeries.jl</code></a>. If it's a symbolic expression it is computed by Jellyfish directly.
-<br><br><br><br><br><br>
+<p>This one was very helpful in my Linear Algebra and Analysis exam.</p>
+<p>If <code>func</code> is a native Julia function the taylor polynomial is computed with <a href="https://juliapackages.com/p/taylorseries"><code>TaylorSeries.jl</code></a>. If it's a symbolic expression it is computed by Jellyfish directly.</p>
+</section>
+</section>
 
 
 
 
 
-
+<section>
 <h1 id="discretemath">Discrete Math</h1>
+
+<section>
 <h2 id="nsolve2">nsolve</h2>
-<code>nsolve(func; estimate, iterations)</code> - <u>Numeric</u>, <u>Symbolic</u><br>
+<p><code>nsolve(func; estimate, iterations)</code> - <u>Numeric</u>, <u>Symbolic</u></p>
 <p>Numerically finds a root of <code>func</code> \(: \mathbb R \rightarrow \mathbb R\) using the Newton-Raphson method with <code>estimate</code> as a starting guess and <code>iterations</code> iterations.</p>
 \[
 \textup{Solves for} \ x\ \textup{in:} \quad \textup{func}(x) = 0
 \]
 <h4>arguments</h4>
-<code>func</code> - any continuous callable taking 1 <code>Number</code> and returning 1 <code>Number</code><br>
-<code>estimate</code> - any <code>Number</code> - optional (default = 0)<br>
-<code>iterations</code> - any <code>Int</code> - optional (default = 10)<br>
+<p><code>func</code> - any continuous callable taking 1 <code>Number</code> and returning 1 <code>Number</code></p>
+<p><code>estimate</code> - any <code>Number</code> - optional (default = 0)</p>
+<p><code>iterations</code> - any <code>Int</code> - optional (default = 10)</p>
 
 <h4>example usage</h4>
-<u>Numeric</u>
+<p><u>Numeric</u></p>
 <pre><code>f(x) = x-1
 nsolve(f)</code></pre>
-<pre><code>1.0</code></pre><br>
-<u>Symbolic</u>
+<pre><code>1.0</code></pre>
+<br>
+<p><u>Symbolic</u></p>
 <pre><code>@sym x
 nsolve(x^2-3)</code></pre>
 <pre><code>1.7320508075688774</code></pre>
@@ -271,52 +293,56 @@ nsolve(x^2, estimate=0.01, iterations=15)</code></pre>
 <pre><code>3.0517578125e-7</code></pre>
 
 <h4>notes</h4>
-I initially wrote it from memory, having heard of Newton's method 2 years ago, the result was a solver that only worked for strictly growing/shrinking functions. It's still included in the package as <code>Jellyfish.reallybadsolver()</code>.
-<br><br><br>
+<p>I initially wrote it from memory, having heard of Newton's method 2 years ago, the result was a solver that only worked for strictly growing/shrinking functions. It's still included in the package as <code>Jellyfish.reallybadsolver()</code>.</p>
+</section>
 
 
-
+<section>
 <h2 id="nlim">nlim</h2>
-<code>nlim(func, dest, dir)</code> - <u>Numeric</u>, <u>Symbolic</u><br>
+<p><code>nlim(func, dest, dir)</code> - <u>Numeric</u>, <u>Symbolic</u></p>
 <p>Computes the limit of a function <code>func</code> \(: \mathbb R \rightarrow \mathbb R^n\) approaching <code>dest</code> from <code>dir</code> numerically using Richardson Extrapolation.</p>
 \[
 \lim_{x \rightarrow \textup{dest}^{\textup{dir}}} \textup{func}(x)
 \]
 
 <h4>arguments</h4>
-<code>func</code> - any callable taking 1 <code>Number</code> and returning 1 <code>Number</code><br>
-<code>dest</code> - any <code>Number</code><br>
-<code>dir </code> - the <code>+</code> or <code>-</code> function - optional (default <code>+</code>)<br>
+<p><code>func</code> - any callable taking 1 <code>Number</code> and returning 1 <code>Number</code></p>
+<p><code>dest</code> - any <code>Number</code></p>
+<p><code>dir </code> - the <code>+</code> or <code>-</code> function - optional (default <code>+</code>)</p>
 
 <h4>example usage</h4>
-<u>Numeric</u>
+<p><u>Numeric</u></p>
 <pre><code>f(x) = 1/x
 nlim(f, Inf)</code></pre>
 <pre><code>0.0</code></pre>
 <br>
-<u>Symbolic</u>
+<p><u>Symbolic</u></p>
 <pre><code>@sym x
 nlim(1/x-1, 1)</code></pre>
-<pre><code>-2.0381780846385115e-15</code></pre><br>
-
+<pre><code>-2.0381780846385115e-15</code></pre>
+<br>
 <pre><code>@sym x
 nlim(-x^2 - 2, 2, dir=+)</code></pre>
 <pre><code>-6.0</code></pre>
 
 
 <h4>notes</h4>
-This function is a wrapper of <code>Richardson.extrapolate</code> from <a href="https://juliapackages.com/p/richardson"><code>Richardson.jl</code></a><br><br>
-There is currently no system to detect when the limit approaches infinity, make sure to sanity check before using the result. Values that are close to 0 or very large are usually an indicator of an infinite limit.
-<br><br><br><br><br><br>
+<p>This function is a wrapper of <code>Richardson.extrapolate</code> from <a href="https://juliapackages.com/p/richardson"><code>Richardson.jl</code></a></p>
+<br>
+<p>There is currently no system to detect when the limit approaches infinity, make sure to sanity check before using the result. Values that are close to 0 or very large are usually an indicator of an infinite limit.</p>
+</section>
+</section>
 
 
 
 
 
-
+<section>
 <h1 id="vectorcalc">Vector Calculus</h1>
+
+<section>
 <h2 id="grad">grad</h2>
-<code>grad(field, var, order)</code> - <u>Symbolic</u><br>
+<p><code>grad(field, var, order)</code> - <u>Symbolic</u></p>
 <p>Computes the <code>order</code>'th order gradient of a scalar field <code>field</code>\(: \mathbb{R}^n \rightarrow \mathbb{R}\) with respect to <code>var</code>.</p>
 
 \[
@@ -333,9 +359,9 @@ There is currently no system to detect when the limit approaches infinity, make 
 \end{pmatrix}\]
 
 <h4>arguments</h4>
-<code>field</code> Differentiable callable with 1 or more inputs and 1 output<br>
-<code>var</code> Vector of <code>Sym</code>s of same length as <code>field</code>, optional (default: collects free symbols automatically)<br>
-<code>order</code> Any <code>Number</code>, optional (default: 1)
+<p><code>field</code> Differentiable callable with 1 or more inputs and 1 output</p>
+<p><code>var</code> Vector of <code>Sym</code>s of same length as <code>field</code>, optional (default: collects free symbols automatically)</p>
+<p><code>order</code> Any <code>Number</code>, optional (default: 1)</p>
 
 <h4>example usage</h4>
 <pre><code>@sym x,y
@@ -352,12 +378,13 @@ grad(exp(y) * x^2, [x,y], order=2)</code></pre>
    2*exp(y)
  x^2*exp(y)
 </code></pre>
-<br><br><br>
+</section>
 
 
 
+<section>
 <h2 id="divg">divg</h2>
-<code>divg(field, var)</code> - <u>Symbolic</u>
+<p><code>divg(field, var)</code> - <u>Symbolic</u></p>
 <p>Computes the divergence of a vector field <code>field</code>\(: \mathbb{R}^n \rightarrow \mathbb{R}^n\) with respect to <code>var</code></p>
 
 \[\textup{div(field)} \quad = \quad \nabla \cdot \textup{field} \quad = \quad
@@ -369,19 +396,20 @@ grad(exp(y) * x^2, [x,y], order=2)</code></pre>
 \]
 
 <h4>arguments</h4>
-<code>field</code> Vector of differentiable symbolic callables <br>
-<code>var</code> Vector of variables, must have same length as <code>field</code> <br>
+<p><code>field</code> Vector of differentiable symbolic callables</p>
+<p><code>var</code> Vector of variables, must have same length as <code>field</code></p>
 
 <h4>example usage</h4>
 <pre><code>@sym x,y
 divg([y*x^2, x*y^2], [x,y])</code></pre>
 <pre><code>4⋅x⋅y</code></pre>
-<br><br><br>
+</section>
 
 
 
+<section>
 <h2 id="curl">curl</h2>
-<code>curl(field, var)</code> - <u>Symbolic</u>
+<p><code>curl(field, var)</code> - <u>Symbolic</u></p>
 <p>Computes the curl of a 2D or 3D vector field <code>field</code>\(: \mathbb{R}^{[2; 3]} \rightarrow \mathbb{R}^{[2; 3]}\) with respect to <code>var</code></p>
 
 \[\textup{curl(field)} \quad = \quad \nabla \times \textup{field} \quad = \quad
@@ -402,8 +430,8 @@ divg([y*x^2, x*y^2], [x,y])</code></pre>
 
 
 <h4>arguments</h4>
-<code>field</code> Vector of differentiable symbolic callables <br>
-<code>var</code> Vector of variables, must have same length as <code>field</code> <br>
+<p><code>field</code> Vector of differentiable symbolic callables</p>
+<p><code>var</code> Vector of variables, must have same length as <code>field</code></p>
 
 <h4>example usage</h4>
 <pre><code>@sym x,y,z
@@ -412,65 +440,72 @@ curl([y*x^2, x*y^2, z^y], [x,y,z])</code></pre>
  z^y*log(z)
           0
  -x^2 + y^2</code></pre>
-<br><br><br><br><br><br>
+</section>
+</section>
 
 
 
 
 
-
+<section>
 <h1 id="stats">Statistics</h1>
-Documentation for this section is unfinished, <code>propsem</code> and <code>chisq</code> remain.
+<p>Documentation for this section is unfinished, <code>propsem</code> and <code>chisq</code> remain.</p>
+
+<section>
 <h2 id="sem">sem</h2>
-<code>sem(σ, n)</code> - <u>Numeric</u>
+<p><code>sem(σ, n)</code> - <u>Numeric</u></p>
 <p>Computes the standard error on the mean given a standard deviation <code>σ</code> and sample size <code>n</code>.</p>
 \[
 \frac{\sigma}{\sqrt n}
 \]
 
 <h4>arguments</h4>
-<code>σ</code> Any <code>Number</code> <br>
-<code>n</code> Any <code>Number</code>
+<p><code>σ</code> Any <code>Number</code></p>
+<p><code>n</code> Any <code>Number</code></p>
 
 <h4>example usage</h4>
 <pre><code>sem(3, 10)</code></pre>
 <pre><code>0.9486832980505138</code></pre>
-<br><br><br>
+</section>
 
 
 
+<section>
 <h2 id="zscore">zscore</h2>
-<code>zscore(x, μ, σ)</code> - <u>Numeric</u>
+<p><code>zscore(x, μ, σ)</code> - <u>Numeric</u></p>
 <p>Computes how many standard deviations <code>x</code> is from the mean <code>μ</code> given a standard deviation <code>σ</code>.</p>
 \[
 \frac{\textup{x-μ}}{\textup{σ}}
 \]
 
 <h4>arguments</h4>
-<code>x</code> Any <code>Number</code> <br>
-<code>μ</code> Any <code>Number</code> <br>
-<code>σ</code> Any <code>Number</code> <br>
+<p><code>x</code> Any <code>Number</code></p>
+<p><code>μ</code> Any <code>Number</code></p>
+<p><code>σ</code> Any <code>Number</code></p>
 
 <h4>example usage</h4>
 <pre><code>zscore(3, 2, 1.5)</code></pre>
 <pre><code>0.6666666666666666</code></pre>
-<br><br><br><br><br><br>
+</section>
+</section>
 
 
 
 
 
 
+<section>
 <h1 id="utils">Utilities</h1>
 <h2 id="physconst">physconst</h2>
-<code>physconst(name)</code>
+<p><code>physconst(name)</code></p>
 <p>Gets the CODATA 2022 recommended value of a physical constant corresponding to <code>name</code>.</p>
 
 <h4>arguments</h4>
-<code>name</code> Constant name, provided as a <code>String</code>
+<p><code>name</code> Constant name, provided as a <code>String</code></p>
 
 <h4>example usage</h4>
 <pre><code>physconst("G_0")</code></pre>
 <pre><code>7.7480917299e-5</code></pre>
+</section>
 </body>
 </html>
