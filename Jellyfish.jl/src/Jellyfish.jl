@@ -9,6 +9,7 @@ import PyCall
 import Unitful
 import Richardson
 import TaylorSeries
+import LinearAlgebra
 import PhysicalConstants.CODATA2022
 
 
@@ -71,7 +72,8 @@ include("math/NumericVectorCalculus.jl")
 include("math/NumericMath.jl")
 include("math/Statistics.jl")
 include("math/Solvers.jl")
-export dif, int, tpoly, nlim, nsolve, ndiv, ncurl, sem, propsem, zscore, chisq, grad, divg, curl, solve
+include("math/LinearAlgebra.jl")
+export dif, int, tpoly, nlim, nsolve, ndiv, ncurl, sem, propsem, zscore, chisq, grad, divg, curl, solve, cross, dot
 
 include("legacy/2DPlotting.jl")
 include("legacy/PlotScalarField.jl")

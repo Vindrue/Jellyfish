@@ -30,7 +30,7 @@ function curl(field::Vector, var::Vector)
 	end
 
 	if length(field) == 2
-		return dif(field[2], var=var[1]) - diff(field[1], var=var[2])
+		return dif(field[2], var[1]) - diff(field[1], var[2])
 	elseif length(field) == 3
 		return [dif(field[3], var[2]) - dif(field[2], var[3]),
 			dif(field[1], var[3]) - dif(field[3], var[1]),
