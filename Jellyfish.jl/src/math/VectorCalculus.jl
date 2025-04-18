@@ -39,3 +39,15 @@ function curl(field::Vector, var::Vector)
 		return error("curl() currently only supports 2D and 3D vector fields")
 	end
 end
+
+function polar(vec::Vector)
+		
+	if length(vec) != 2
+		error("polar() is only defined for 2D vectors")
+	end
+
+	r = sqrt(vec[1]^2 + vec[2])
+	θ = atan(vec[1]/vec[2])
+
+	return (r, θ)
+end

@@ -32,8 +32,14 @@
     <li><a href="#nsolve2">nsolve</a></li>
     <li><a href="#nlim">nlim</a></li>
 </ul>
+<p><a href="#linalg">Linear Algebra</a></p>
+<ul>
+    <li><a href="#dot">dot</a></li>
+    <li><a href="#cross">cross</a></li>
+</ul>
 <p><a href="#vectorcalc">Vector Calculus</a></p>
 <ul>
+    <li><a href="#polar">grad</a></li>
     <li><a href="#grad">grad</a></li>
     <li><a href="#divg">divg</a></li>
     <li><a href="#curl">curl</a></li>
@@ -336,9 +342,86 @@ nlim(-x^2 - 2, 2, dir=+)</code></pre>
 
 
 
+<section>
+<h1 id="vectorcalc">Vector Calculus</h1>
+
+<section>
+<h2 id="dot">dot</h2>
+<p><code>dot(v, u)</code> - <u>Numeric</u>, <u>Symbolic</u></p>
+<p>Computes the dot product of vectors or vector fields <code>v</code> and <code>u</code> : \(\mathbb{R}^n \rightarrow \mathbb{R}^n\).</p>
+
+\[
+\textup v \cdot \textup u
+\]
+<h4>arguments</h4>
+<p><code>v</code> any <code>Vector</code> of <code>Number</code>s and <code>Sym</code>s</p>
+<p><code>u</code> any <code>Vector</code> of <code>Number</code>s and <code>Sym</code>s</p>
+
+<h4>example usage</h4>
+<pre><code>@sym x
+dot([1, 2], [3, x])</code></pre>
+<pre><code>2⋅x + 3</code></pre>
+</section>
+
+
+
+<section>
+<h2 id="cross">cross</h2>
+<p><code>cross(v, u)</code> - <u>Numeric</u>, <u>Symbolic</u></p>
+<p>Computes the cross product of two 2D or 3D vectors or vector fields <code>v</code> and <code>u</code> : \(\mathbb{R}^{\{2,3\}} \rightarrow \mathbb{R}^{\{2,3\}}\).</p>
+
+\[
+\textup v \times \textup u
+\]
+<h4>arguments</h4>
+<p><code>v</code> any <code>Vector</code> of <code>Number</code>s and <code>Sym</code>s</p>
+<p><code>u</code> any <code>Vector</code> of <code>Number</code>s and <code>Sym</code>s</p>
+
+<h4>example usage</h4>
+<pre><code>@sym x
+cross([1, 2], [3, x])</code></pre>
+<pre><code>3-element Vector{SymPyCore.Sym{PyCall.PyObject}}:
+     0
+     0
+ x - 6</code></pre>
+<br>
+<pre><code>@sym x
+cross([1, 2, π], [3, x, x^2])</code></pre>
+<pre><code>3-element Vector{SymPyCore.Sym{PyCall.PyObject}}:
+ 2.0*x^2 - 3.14159265358979*x
+   9.42477796076938 - 1.0*x^2
+                  1.0⋅x - 6.0</code></pre>
+</section>
+</section>
+
+
+
+
 
 <section>
 <h1 id="vectorcalc">Vector Calculus</h1>
+
+<section>
+<h2 id="polar">polar</h2>
+<p><code>polar(vec)</code> - <u>Numeric</u>, <u>Symbolic</u></p>
+<p>Converts a cartesian vector or vector field <code>vec</code> : \(\mathbb{R}^2 \rightarrow \mathbb{R}^2\) to a polar vector. Returns a <code>Tuple</code>, consisting of the magnitude and angle respectively.</p>
+
+\[
+\left \{ \sqrt{\textup{vec}[1]^2 + \textup{vec}[2]^2}, \textup{arctan} \left ( \frac{\textup{vec}[1]}{\textup{vec}[2]}\right) \right \}
+\]
+<h4>arguments</h4>
+<p><code>vec</code> 2-element <code>Vector</code> of <code>Number</code>s and <code>Sym</code>s</p>
+
+<h4>example usage</h4>
+<u>Numeric</u>
+<pre><code>polar([3, 4])</code></pre>
+<pre><code>(3.605551275463989, 0.6435011087932844)</code></pre>
+<br>
+<u>Symbolic</u>
+<pre><code>@sym x
+polar([3*x, x])</code></pre>
+<pre><code>(sqrt(9*x^2 + x), atan(3))</code></pre>
+</section>
 
 <section>
 <h2 id="grad">grad</h2>

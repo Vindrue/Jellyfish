@@ -1,6 +1,7 @@
 module Jellyfish
 
 
+
 # Dependencies
 
 import Plots
@@ -13,18 +14,23 @@ import LinearAlgebra
 import PhysicalConstants.CODATA2022
 
 
+
 # Options
 
 SOLVEWARNINGS = true
 TaylorSeries.displayBigO(false)
 export SOLVEWARNINGS
 
-# Submodules
+
+
+# Utility submodules
 
 include("utils/MathUtils.jl")
 include("utils/Consts.jl")
 include("utils/InputChecks.jl")
 export @sym, physconst
+
+
 
 # Constants
 
@@ -55,7 +61,6 @@ const ℂ = SymPy.sympy.Complexes()
 
 export ℕ,ℤ,ℚ,ℝ,ℂ
 
-
 const NATURALS  = ℕ
 const INTEGERS  = ℤ
 const RATIONALS = ℚ
@@ -66,21 +71,34 @@ export NATURALS,INTEGERS,RATIONALS,REALS,COMPLEXES
 
 
 
-include("math/Calculus.jl")
-include("math/VectorCalculus.jl")
-include("math/NumericVectorCalculus.jl")
-include("math/NumericMath.jl")
-include("math/Statistics.jl")
-include("math/Solvers.jl")
-include("math/LinearAlgebra.jl")
-export dif, int, tpoly, nlim, nsolve, ndiv, ncurl, sem, propsem, zscore, chisq, grad, divg, curl, solve, cross, dot
+# Main submodules
 
+include("math/Calculus.jl")
+export dif, int, tpoly
+
+include("math/VectorCalculus.jl")
+export grad, divg, curl, polar
+
+include("math/NumericVectorCalculus.jl")
+export ndiv, ncurl
+
+include("math/NumericMath.jl")
+export nlim, nsolve
+
+include("math/Statistics.jl")
+export sem, propsem, zscore, chisq
+
+include("math/Solvers.jl")
+export solve
+
+include("math/LinearAlgebra.jl")
+export cross, dot
+
+# legacy
 include("legacy/2DPlotting.jl")
 include("legacy/PlotScalarField.jl")
 include("legacy/ReallyBadSolver.jl")
 export plot, plotscalarfield, reallybadsolver
-
-
 
 
 
