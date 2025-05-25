@@ -28,7 +28,7 @@ export SOLVEWARNINGS
 include("utils/MathUtils.jl")
 include("utils/Consts.jl")
 include("utils/InputChecks.jl")
-export @sym, physconst
+export @sym, physconst, tex
 
 
 
@@ -50,6 +50,9 @@ const CATALAN = 0.91596559417721901505460351493238411077414937428167
 const FEIGENBAUM_ALPHA = 4.66920160910299067185320382046620161725818557747576
 const FEIGENBAUM_DELTA = 2.50290787509589282228390287321821578638127137672714
 export e, GOLDEN, EULERGAMMA, APERY, CATALAN, FEIGENBAUM_ALPHA, FEIGENBAUM_DELTA
+
+const _ε = 0.0000000000001
+export _ε
 
 # sets
 #const SPS = sympy.S
@@ -74,7 +77,7 @@ export NATURALS,INTEGERS,RATIONALS,REALS,COMPLEXES
 # Main submodules
 
 include("math/Calculus.jl")
-export dif, int, tpoly
+export dif, int, tpoly, lim
 
 include("math/VectorCalculus.jl")
 export grad, divg, curl, polar
@@ -86,7 +89,7 @@ include("math/NumericMath.jl")
 export nlim, nsolve
 
 include("math/Statistics.jl")
-export sem, propsem, zscore, chisq
+export sem, propsem, zscore, chisq, properr
 
 include("math/Solvers.jl")
 export solve
@@ -95,10 +98,10 @@ include("math/LinearAlgebra.jl")
 export cross, dot
 
 # legacy
-include("legacy/2DPlotting.jl")
-include("legacy/PlotScalarField.jl")
-include("legacy/ReallyBadSolver.jl")
-export plot, plotscalarfield, reallybadsolver
+#include("legacy/2DPlotting.jl")
+#include("legacy/PlotScalarField.jl")
+#include("legacy/ReallyBadSolver.jl")
+#export plot, plotscalarfield, reallybadsolver
 
 
 

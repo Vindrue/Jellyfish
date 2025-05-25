@@ -22,8 +22,8 @@ function solve(eq, var=(); domain=SymPy.sympy.Reals())
 				#pass1_solution = SymPy.nonlinsolve(eq, var, PyCall.convert(PyCall.PyObject, domain))
 				pass1_solution = SymPy.solve(eq, var)
 			else
-				error("System of $(len(eq)) equations provided,
-				      yet not enough equations to solve for all $(len(var)) variables,
+				error("System of $(length(eq)) equations provided,
+				      yet not enough equations to solve for all $(length(var)) variables,
 				      specify solution variables with the var=[] method")	
 			end
 		# if no solution variable & single equation

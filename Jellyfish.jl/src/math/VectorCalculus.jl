@@ -49,5 +49,19 @@ function polar(vec::Vector)
 	r = sqrt(vec[1]^2 + vec[2])
 	θ = atan(vec[1]/vec[2])
 
-	return (r, θ)
+	return [r, θ]
+end
+
+function cartesian(vec::Vector)
+
+	if length(vec) != 2
+		error("cartesian() is only defined for 2D vectors, so far")
+	end
+
+	r,θ = vec[1],vec[2]
+
+	x = r * cos(θ)
+	y = r * sin(θ)
+
+	return [x, y]
 end

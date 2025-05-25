@@ -74,3 +74,10 @@ function tpoly(func, var = false; order::Int=1, point::Number=0)
 
 	return poly
 end
+
+function lim(func, dest, var::SymPy.Sym=@sym(_x))
+	
+	var = colsym(func, var)
+
+	return SymPy.limit(func, var=>dest)
+end

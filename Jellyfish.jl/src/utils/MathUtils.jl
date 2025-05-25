@@ -26,3 +26,7 @@ function colsym(func, sym)
 
 	return sym
 end
+
+function tex(expr)
+	return SymPy.latex(expr)
+end

@@ -26,14 +26,27 @@ function propsem(vals::Vector, sem::Vector, func; var::SymPy.Sym=@sym(_x))
 	return propsem
 end
 
-function chisq(x::Array, y::Array, ysem::Vector, model)
-	if !checklenmatch([x, y])
-		error("length mismatch between \"x\" and \"y\" arguments")
-	end
+function properr(f; var=[], err, vals)
 
+    if isempty(var)
+        var = SymPy.free_symbols(f)
+    end
+
+    derives = []
+    subsdict = []
+    for i in 1:length(var)
+        push!(derives, (dif(f, var[i])*err[i])^2)
+
+        push!(subsdict, var[i] => vals[i])
+    end
+
+    return SymPy.subs(sqrt(sum(derives)), Dict(subsdict))
+end
+
+function chisq(o, e, Δ)
 	chisq = 0
-	for i in 1:length(x)
-		chisq += ((y[i] - model(x[i]))^2)/(ysem[i]^2)
+	for i in 1:length(o)
+		chisq += ((o[i] - e[i])^2)/Δ[i]
 	end
 	
 	return chisq
